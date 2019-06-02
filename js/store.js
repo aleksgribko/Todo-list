@@ -83,16 +83,30 @@
 		// Generate an ID
 	    var newId = ""; 
 	    var charset = "0123456789";
+	    let checkForDuplicate = false
 
-        for (var i = 0; i < 6; i++) {
-     		newId += charset.charAt(Math.floor(Math.random() * charset.length));
-		}
+	  ////////////////////////////////////////////// Here I used Do... while + for... of
 
+	    do{
+	    	checkForDuplicate = false
+	    	for (var i = 0; i < 6; i++) {
+     			newId += charset.charAt(Math.floor(Math.random() * charset.length));
+     		}
+     		for (let todo of todos){
+     			if(todo.id === newId){
+     				newId = ''
+     				checkForDuplicate = true
+     				break
+     			}
+     		}
+	    } while (checkForDuplicate)
+	           
 		// If an ID was actually given, find the item and update each property
-		if (id) {
+
+		if (id) {			
 			for (var i = 0; i < todos.length; i++) {
 				if (todos[i].id === id) {
-					for (var key in updateData) {
+					for (var key in updateData) {						
 						todos[i][key] = updateData[key];
 					}
 					break;
@@ -104,8 +118,7 @@
 		} else {
 
     		// Assign an ID
-			updateData.id = parseInt(newId);
-    
+			updateData.id = parseInt(newId);    
 
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);

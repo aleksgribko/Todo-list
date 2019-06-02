@@ -9,6 +9,7 @@
 	 * @param {object} view The view instance
 	 */
 	function Controller(model, view) {
+		console.log(this)
 		var self = this;
 		self.model = model;
 		self.view = view;
@@ -51,7 +52,7 @@
 	 *
 	 * @param {string} '' | 'active' | 'completed'
 	 */
-	Controller.prototype.setView = function (locationHash) {
+	Controller.prototype.setView = function (locationHash) {		
 		var route = locationHash.split('/')[1];
 		var page = route || '';
 		this._updateFilterState(page);
@@ -74,6 +75,7 @@
 	Controller.prototype.showActive = function () {
 		var self = this;
 		self.model.read({ completed: false }, function (data) {
+			console.log('data', data)
 			self.view.render('showEntries', data);
 		});
 	};
@@ -93,8 +95,7 @@
 	 * object and it'll handle the DOM insertion and saving of the new item.
 	 */
 	Controller.prototype.addItem = function (title) {
-		var self = this;
- 		debugger
+		var self = this; 		
 		if (title.trim() === '') {
 			return;
 		}
@@ -259,7 +260,7 @@
 		// re-create the todo item elements, calling:
 		//   this.show[All|Active|Completed]();
 		if (force || this._lastActiveRoute !== 'All' || this._lastActiveRoute !== activeRoute) {
-			this['show' + activeRoute]();
+			this['show' + activeRoute]();			
 		}
 
 		this._lastActiveRoute = activeRoute;

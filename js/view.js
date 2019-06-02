@@ -192,7 +192,7 @@
 				handler({id: self._itemId(this)});
 			});
 
-		} else if (event === 'itemRemove') {
+		} else if (event === 'toggle-all') {
 			$delegate(self.$todoList, '.destroy', 'click', function () {
 				handler({id: self._itemId(this)});
 			});
